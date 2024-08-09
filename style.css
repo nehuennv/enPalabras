@@ -1,10 +1,10 @@
 @font-face {
   font-family: "Mi Fuente";
-  src: url("../assets/font/ITCAvantGardeStd-Demi.ttf");
+  src: url("assets/font/ITCAvantGardeStd-Demi.ttf");
 }
 @font-face {
   font-family: "Poppins";
-  src: url("../assets/font/Poppins-Medium.ttf");
+  src: url("assets/font/Poppins-Medium.ttf");
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -543,6 +543,7 @@ body .viewCard .viewCardContent .buttonViewCardContainer button {
   font-family: "Poppins", sans-serif;
   border: none;
   cursor: pointer;
+  font-size: 14px;
   transition: all 0.5s;
 }
 body .viewCard .viewCardContent .buttonViewCardContainer button:hover {
@@ -647,8 +648,16 @@ body .viewCard .viewCardContent .buttonViewCardContainer button:hover {
     color: #fff;
     font-family: "Poppins", sans-serif;
     font-size: 14px;
+    white-space: nowrap;
+
   }
   body .menuGameContainer footer .buttonRandomCategory img {
     height: 15px;
+  }
+  body .viewCard .viewCardContent .card {
+    width: 15rem;
+  }
+  body .viewCard .viewCardContent .card .cardText {
+    font-size: 14px;
   }
 }
