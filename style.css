@@ -1,0 +1,654 @@
+@font-face {
+  font-family: "Mi Fuente";
+  src: url("../assets/font/ITCAvantGardeStd-Demi.ttf");
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/font/Poppins-Medium.ttf");
+}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #292836;
+  font-family: "Poppins", sans-serif;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+body .menuGameContainer {
+  transition: all 0.5s;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  gap: 10px;
+  align-content: center;
+}
+body .menuGameContainer header {
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .menuGameContainer header img {
+  height: 40px;
+}
+body .menuGameContainer main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70%;
+  gap: 10px;
+  align-content: center;
+}
+body .menuGameContainer footer {
+  height: 15%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .menuGameContainer footer .buttonRandomCategory {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+body .menuGameContainer footer .buttonRandomCategory p {
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+}
+body .menuGameContainer footer .buttonRandomCategory img {
+  height: 20px;
+}
+body .menuGameContainer .gameCardSelection {
+  height: 60vh;
+  width: 40vh;
+  border-radius: 16px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  align-items: center;
+  transition: all 0.5s;
+  z-index: 1;
+  box-shadow: 0px 7px 38px 10px rgba(0, 0, 0, 0.25);
+}
+body .menuGameContainer .gameCardSelection h1 {
+  height: 15%;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+body .menuGameContainer .gameCardSelection img {
+  height: 85%;
+}
+/* body .menuGameContainer .cardPers {
+  background: linear-gradient(225deg, #B1A3C4 20.54%, #CF8BAB 34.19%, #DF8698 67.65%, #31AAE8 100%);
+} */
+
+
+body .menuGameContainer .cardPers {
+  background: linear-gradient(110deg, #b1a3c4, #cf8bab, #df8698, #31aae8);
+  background-size: 300% 300%; 
+  -webkit-animation: pers 10s ease-in-out infinite;
+  -moz-animation: pers 10s ease-in-out infinite;
+  -o-animation: pers 10s ease-in-out infinite;
+  animation: pers 10s ease-in-out infinite;
+}
+
+@-webkit-keyframes pers {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@-moz-keyframes pers {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@-o-keyframes pers {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@keyframes pers {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+
+
+
+body .menuGameContainer .cardPers:hover {
+  box-shadow: 0px 10px 98px -4px #cf8bab;
+}
+body .menuGameContainer .cardPers img {
+  width: 70%;
+}
+/* body .menuGameContainer .cardProf {
+  background: linear-gradient(115deg, #9E58B0 0%, #9F73A6 32.29%, #7475AD 68.75%, #024579 100%);
+} */
+body .menuGameContainer .cardProf {
+  background: linear-gradient(310deg, #9E58B0, #9F73A6, #7475AD, #024579);
+  background-size: 300% 300%; 
+  -webkit-animation: prof 10s ease-in-out infinite;
+  -moz-animation: prof 10s ease-in-out infinite;
+  -o-animation: prof 10s ease-in-out infinite;
+  animation: prof 10s ease-in-out infinite;
+}
+
+@-webkit-keyframes prof {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@-moz-keyframes prof {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@-o-keyframes prof {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@keyframes prof {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+
+
+
+body .menuGameContainer .cardProf:hover {
+  box-shadow: 0px 10px 98px -4px #7775AC;
+}
+body .menuGameContainer .cardProf img {
+  width: 70%;
+}
+/* body .menuGameContainer .cardPic {
+  background: linear-gradient(224deg, #D50747 0%, #D2525B 51.87%, #CC596B 69.06%, #C95E74 83.65%, #C07288 100%);
+} */
+body .menuGameContainer .cardPic {
+  background: linear-gradient(310deg, #50031b, #ac3941, #b3162e, #C95E74, #5a1529);
+  background-size: 200% 200%; 
+  -webkit-animation: pic 10s ease-in-out infinite;
+  -moz-animation: pic 10s ease-in-out infinite;
+  -o-animation: pic 10s ease-in-out infinite;
+  animation: pic 10s ease-in-out infinite;
+}
+
+@-webkit-keyframes pic {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@-moz-keyframes pic {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@-o-keyframes pic {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@keyframes pic {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+
+
+
+
+body .menuGameContainer .cardPic:hover {
+  box-shadow: 0px 10px 98px -4px #D33353;
+}
+body .menuGameContainer .cardPic img {
+  width: 70%;
+}
+body .menuGameContainer .cardRand {
+  background: linear-gradient(224deg, #DC528E 0%, #D78EA9 32.29%, #D98083 68.75%, #D87776 100%);
+}
+body .menuGameContainer .cardRand {
+  background: linear-gradient(110deg, #9c4265, #d87a5e, #f08fb4, #9e4745);
+  background-size: 300% 300%; 
+  -webkit-animation: rand 10s ease-in-out infinite;
+  -moz-animation: rand 10s ease-in-out infinite;
+  -o-animation: rand 10s ease-in-out infinite;
+  animation: rand 10s ease-in-out infinite;
+}
+
+@-webkit-keyframes rand {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@-moz-keyframes rand {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@-o-keyframes rand {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+@keyframes rand {
+  0% {
+    background-position: 0% 29%;
+  }
+  50% {
+    background-position: 100% 72%;
+  }
+  100% {
+    background-position: 0% 29%;
+  }
+}
+
+
+
+body .menuGameContainer .cardRand:hover {
+  z-index: 2;
+  box-shadow: 0px 10px 98px -4px #DA6998;
+}
+body .menuGameContainer .cardRand img {
+  width: 70%;
+}
+body .viewCard {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 4;
+  transition: all 0.5s;
+  background: #292836;
+}
+body .viewCard .arrowBack {
+  height: 8%;
+  display: flex;
+  align-items: center;
+}
+body .viewCard .arrowBack button {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .viewCard .arrowBack button img {
+  height: 20px;
+}
+body .viewCard .viewCardContent {
+  transform: translateY(-5%);
+  height: 92%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  justify-items: center;
+}
+body .viewCard .viewCardContent .nameCardSelected {
+  display: flex;
+  transition: all 0.6s;
+  flex-direction: column;
+  align-items: center;
+}
+body .viewCard .viewCardContent .nameCardSelected p {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 6px;
+}
+body .viewCard .viewCardContent .nameCardSelected .nameViewSelected {
+  font-size: 30px;
+}
+body .viewCard .viewCardContent .card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  position: relative;
+  height: 25rem;
+  width: 17rem;
+  transform: rotateY(0deg);
+  box-shadow: 0px 10px 98px -4px rgba(0, 0, 0, 0.25);
+  transition: all 0.6s;
+}
+body .viewCard .viewCardContent .card div {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backface-visibility: hidden;
+  transition: transform 0.6s;
+}
+body .viewCard .viewCardContent .card .cardFront {
+  transform: rotateY(0deg);
+  border-radius: 16px;
+  background: linear-gradient(115deg, #9E58B0 0%, #9F73A6 32.29%, #7475AD 68.75%, #024579 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: perspective(600px) rotateY(0deg);
+}
+body .viewCard .viewCardContent .card .cardBack {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFBE5;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 16px;
+  width: 100%;
+  text-align: center;
+  transform: perspective(600px) rotateY(180deg);
+}
+body .viewCard .viewCardContent .card .cardBack img {
+  height: 6%;
+  margin-top: 10%;
+}
+body .viewCard .viewCardContent .card .cardBack p {
+  width: 85%;
+}
+body .viewCard .viewCardContent .card .cardBack button {
+  margin-bottom: 10%;
+  color: #9B998C;
+  font-family: "Poppins", sans-serif;
+  background: transparent;
+  transition: all 0.5s;
+  border: none;
+  cursor: pointer;
+}
+body .viewCard .viewCardContent .card .cardBack button:hover {
+  color: #404153;
+}
+body .viewCard .viewCardContent .card:hover {
+  box-shadow: 0px 10px 180px -8px rgba(0, 0, 0, 0.25);
+}
+body .viewCard .viewCardContent .card img {
+  width: 80%;
+}
+body .viewCard .viewCardContent .buttonViewCardContainer {
+  transition: all 0.6s;
+}
+body .viewCard .viewCardContent .buttonViewCardContainer button {
+  background: transparent;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  border: none;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+body .viewCard .viewCardContent .buttonViewCardContainer button:hover {
+  transform: scale(1.1);
+}
+
+.showViewCard {
+  transform: translateY(-100%);
+}
+
+.backperspectiva {
+  transition: all 0.5s;
+  background: linear-gradient(225deg, #B1A3C4 20.54%, #CF8BAB 34.19%, #DF8698 67.65%, #31AAE8 100%) !important;
+}
+
+.backprofundidad {
+  transition: all 0.5s;
+  background: linear-gradient(115deg, #9E58B0 0%, #9F73A6 32.29%, #7475AD 68.75%, #024579 100%) !important;
+}
+
+.backpicantes {
+  transition: all 0.5s;
+  background: linear-gradient(224deg, #D50747 0%, #D2525B 51.87%, #CC596B 69.06%, #C95E74 83.65%, #C07288 100%) !important;
+}
+
+.backrandom {
+  transition: all 0.5s;
+  background: linear-gradient(224deg, #DC528E 0%, #D78EA9 32.29%, #D98083 68.75%, #D87776 100%) !important;
+}
+
+.degradeperspectiva {
+  transition: all 0.5s;
+  background: linear-gradient(225deg, #B1A3C4 20.54%, #CF8BAB 34.19%, #DF8698 67.65%, #31AAE8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.degradeprofundidad {
+  transition: all 0.5s;
+  background: linear-gradient(115deg, #9E58B0 0%, #9F73A6 32.29%, #7475AD 68.75%, #024579 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.degradepicantes {
+  transition: all 0.5s;
+  background: linear-gradient(224deg, #D50747 0%, #D2525B 51.87%, #CC596B 69.06%, #C95E74 83.65%, #C07288 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.degraderandom {
+  transition: all 0.5s;
+  background: linear-gradient(224deg, #DC528E 0%, #D78EA9 32.29%, #D98083 68.75%, #D87776 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.flipped {
+  transform: perspective(600px) rotateY(180deg) scale(1.4) !important;
+}
+
+.flippedFront {
+  transform: perspective(600px) rotateY(180deg) !important;
+}
+
+.flippedBack {
+  transform: perspective(600px) rotateY(360deg) scaleX(-1) !important;
+}
+
+.showMenu {
+  transform: translateY(-100%);
+}/*# sourceMappingURL=style.css.map */
+
+@media (max-width: 500px){
+  main{
+    flex-wrap: wrap;
+  }
+  body .menuGameContainer .gameCardSelection{
+    height: 32vh;
+    width: 41vw;
+  }
+  body .menuGameContainer .gameCardSelection img {
+    height: 85%;
+
+  }
+  body .menuGameContainer .gameCardSelection h1 {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    height: 15%;
+    font-size: 14px;
+    transform: translateY(-10px);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+  }
+  body .menuGameContainer footer .buttonRandomCategory p {
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+  }
+  body .menuGameContainer footer .buttonRandomCategory img {
+    height: 15px;
+  }
+}
