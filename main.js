@@ -617,12 +617,15 @@ function elegirAleatorio(arreglo) {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
+  function capitalizeFirstLetter(str) {
+    if (str.length === 0) return str; // Maneja el caso de cadena vacía
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 function SelectedCard(cardName){
 
     menuGameContainer.classList.add("showMenu")
     let randomQuestion = getRandomInt(0, questions[cardName].length - 1)
-    nameViewSelected.innerText = cardName
+    nameViewSelected.innerText = capitalizeFirstLetter(cardName)
     imgCard.src = './assets/img/' + cardName + '.svg'
     cardFront.classList = ["viewCard"]
     cardFront.classList.add("back" + cardName)
