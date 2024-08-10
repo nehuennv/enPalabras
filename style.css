@@ -6,6 +6,10 @@
   font-family: "Poppins";
   src: url("assets/font/Poppins-Medium.ttf");
 }
+@font-face {
+  font-family: "Poppins-Negrita";
+  src: url("assets/font/Poppins-SemiBold.ttf");
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -70,6 +74,9 @@ body .menuGameContainer {
   transition: all 0.5s;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 0;
   overflow: hidden;
   gap: 10px;
@@ -90,12 +97,12 @@ body .menuGameContainer main {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 70%;
+  height: 80%;
   gap: 10px;
   align-content: center;
 }
 body .menuGameContainer footer {
-  height: 15%;
+  height: 10%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -462,9 +469,15 @@ body .viewCard .viewCardContent .nameCardSelected p {
   font-size: 20px;
   color: #fff;
   margin-bottom: 6px;
+  letter-spacing: 0.1em;
+  word-spacing: 0.1em;
 }
 body .viewCard .viewCardContent .nameCardSelected .nameViewSelected {
   font-size: 30px;
+  font-weight: 500;
+  font-family: "Poppins-Negrita" ;
+  letter-spacing: 0.05em;
+  word-spacing: 0.05em;
 }
 body .viewCard .viewCardContent .card {
   display: flex;
@@ -632,7 +645,6 @@ body .viewCard .viewCardContent .buttonViewCardContainer button:hover {
   }
   body .menuGameContainer .gameCardSelection img {
     height: 85%;
-
   }
   body .menuGameContainer .gameCardSelection h1 {
     display: flex;
@@ -643,6 +655,8 @@ body .viewCard .viewCardContent .buttonViewCardContainer button:hover {
     transform: translateY(-10px);
     font-family: "Poppins", sans-serif;
     font-weight: 500;
+    letter-spacing: 0.05em;
+    word-spacing: 0.05em;
   }
   body .menuGameContainer footer .buttonRandomCategory p {
     color: #fff;
@@ -659,5 +673,8 @@ body .viewCard .viewCardContent .buttonViewCardContainer button:hover {
   }
   body .viewCard .viewCardContent .card .cardText {
     font-size: 14px;
+  }
+  body .menuGameContainer header{
+    height: 10%;
   }
 }
