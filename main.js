@@ -15,6 +15,38 @@ let cardText = document.querySelector(".cardText");
 let buttonRandomCategory = document.querySelector(".buttonRandomCategory");
 let menuGameContainer = document.querySelector(".menuGameContainer");
 
+//modal bienvenida
+// modal de bienvenida con animaciones
+let modalWelcome = document.createElement("div");
+modalWelcome.classList.add("modalWelcome");
+modalWelcome.innerHTML = `
+  <div class="modalContent">
+    <h2>¡bienvenidos</h2>
+    <p>elegí una categoría y respondé, son preuguntas generadas por ia por si suelta alguna burrada, aviso</p>
+    <p>hecho por <a href="https://www.instagram.com/nehuennv" target="_blank">@nehuennv</a></p>
+    <button id="closeModal">ok gracias 👍🏻</button>
+  </div>
+`;
+document.body.appendChild(modalWelcome);
+
+// si es la primera vez que entra, mostramos el modal
+// if (!sessionStorage.getItem("gameIntroShown")) {
+    setTimeout(() => {
+        modalWelcome.classList.add("showModal");
+    }, 500);  // Le damos un pequeño delay para que se vea más suave
+//     sessionStorage.setItem("gameIntroShown", "true");
+// }
+
+// evento para cerrar el modal con animación
+document.getElementById("closeModal").addEventListener("click", () => {
+    modalWelcome.classList.remove("showModal");
+    modalWelcome.classList.add("hideModal");
+    setTimeout(() => {
+        modalWelcome.style.display = "none";
+    }, 500); // Espera que termine la animación de cierre
+});
+
+
 let cardSelected;
 const categ = ['perspectiva', 'profundidad', 'picantes', 'random'];
 

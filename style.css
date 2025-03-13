@@ -91,6 +91,91 @@ body .menuGameContainer header {
 body .menuGameContainer header img {
   height: 40px;
 }
+.modalWelcome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.modalContent {
+  background: #3E3D4A;
+  padding: 50px;
+  margin-inline:30px ;
+  border-radius: 20px;
+  text-align: center;
+  width: 80%;
+  max-width: 400px;
+  transform: translateY(-50px);
+  animation: slideUp 0.7s ease-out;
+}
+
+.modalContent h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.modalContent p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 200;
+  color: #fff;
+}
+
+.modalContent a {
+  color: #5dabff;
+  text-decoration: none;
+  font-weight: 200;
+}
+
+.modalContent button {
+  background: #5dabff;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.modalContent button:hover {
+  background: #5dabff;
+}
+
+@keyframes slideUp {
+  0% {
+      transform: translateY(50px);
+      opacity: 0;
+  }
+  100% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+}
+
+/* Animaciones de aparición y desaparición del modal */
+.showModal {
+  display: flex;
+  opacity: 1;
+}
+
+.hideModal {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
 body .menuGameContainer main {
   display: flex;
   flex-direction: row;
@@ -634,6 +719,8 @@ body .viewCard .viewCardContent .buttonViewCardContainer button:hover {
 .showMenu {
   transform: translateY(-100%);
 }/*# sourceMappingURL=style.css.map */
+
+
 
 @media (max-width: 500px){
   main{
