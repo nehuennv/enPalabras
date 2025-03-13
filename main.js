@@ -1,669 +1,119 @@
-let cards = document.querySelectorAll(".gameCardSelection")
-let viewCardContainer = document.querySelector(".viewCard")
-let nameViewSelected = document.querySelector(".nameViewSelected")
-let imgCard = document.querySelector(".imgCard")
-let backButton = document.querySelector(".backButton")
-let card = document.querySelector(".card")
-let buttonViewCar = document.querySelector(".buttonViewCar")
-let cardFront = document.querySelector(".cardFront")
-let cardBack = document.querySelector(".cardBack")
-let nameCardSelected = document.querySelector(".nameCardSelected")
-let buttonViewCardContainer = document.querySelector(".buttonViewCardContainer")
-let cardText = document.querySelector(".cardText")
-let buttonRandomCategory = document.querySelector(".buttonRandomCategory")
-let menuGameContainer = document.querySelector(".menuGameContainer")
+import { questions } from './questions.js';
 
+let cards = document.querySelectorAll(".gameCardSelection");
+let viewCardContainer = document.querySelector(".viewCard");
+let nameViewSelected = document.querySelector(".nameViewSelected");
+let imgCard = document.querySelector(".imgCard");
+let backButton = document.querySelector(".backButton");
+let card = document.querySelector(".card");
+let buttonViewCar = document.querySelector(".buttonViewCar");
+let cardFront = document.querySelector(".cardFront");
+let cardBack = document.querySelector(".cardBack");
+let nameCardSelected = document.querySelector(".nameCardSelected");
+let buttonViewCardContainer = document.querySelector(".buttonViewCardContainer");
+let cardText = document.querySelector(".cardText");
+let buttonRandomCategory = document.querySelector(".buttonRandomCategory");
+let menuGameContainer = document.querySelector(".menuGameContainer");
 
 let cardSelected;
-const categ = [
-  'perspectiva',
-  'profundidad',
-  'picantes',
-  'random'
-];
+const categ = ['perspectiva', 'profundidad', 'picantes', 'random'];
+
+// acá guardamos las preguntas que ya salieron para que no se repitan
+let preguntasUsadas = {
+    perspectiva: [],
+    profundidad: [],
+    picantes: [],
+    random: []
+};
 
 cards.forEach(card => {
-    card.addEventListener("click",()=>{
-        cardSelected = card.dataset.category
-        SelectedCard(cardSelected)
-    })
+    card.addEventListener("click", () => {
+        cardSelected = card.dataset.category;
+        SelectedCard(cardSelected);
+    });
 });
-buttonRandomCategory.addEventListener("click", ()=>{
-    let randomCat = elegirAleatorio(categ)
-    SelectedCard(randomCat)
-})
 
-const questions = {
-    perspectiva: [
-      "¿Qué importancia le das a la comunicación en las relaciones íntimas?",
-      "¿Crees que la química sexual puede desarrollarse con el tiempo o es esencial desde el primer encuentro?",
-      "¿Enamoramos del vínculo entre personas o de las personas en sí?",
-      "¿Consideras que una vida sin actividad sexual es una vida insatisfactoria?",
-      "¿Qué opinas sobre la idea de que tener sexo con empatía es exclusivo de las relaciones de pareja?",
-      "¿Qué papel crees que juegan las fantasías en una relación sexual saludable?",
-      "¿Cómo crees que influyen las expectativas sociales en nuestras actitudes hacia el sexo?",
-      "¿Consideras que la monogamia es la única forma válida de relación?",
-      "¿Qué opinas sobre la exploración y experimentación en la intimidad?",
-      "¿Crees que la compatibilidad sexual es un factor fundamental en una relación?",
-      "¿Cómo crees que la tecnología ha impactado nuestras relaciones sexuales y emocionales?",
-      "¿Qué piensas acerca de la relación entre la confianza y la sexualidad?",
-      "¿Cuál es tu perspectiva sobre la conexión emocional durante el sexo?",
-      "¿Consideras que el amor y el deseo sexual son dos cosas separadas?",
-      "¿Qué crees que define una buena comunicación sexual?",
-      "¿Cómo influye la educación sexual que recibimos en nuestras actitudes y comportamientos?",
-      "¿Qué opinas sobre la importancia del consentimiento en las relaciones sexuales?",
-      "¿Crees que el género y la identidad sexual influyen en nuestras preferencias y experiencias?",
-      "¿Qué piensas sobre el equilibrio entre el placer propio y el de la pareja en el sexo?",
-      "¿Consideras que la intimidad emocional es más difícil de lograr que la intimidad física?",
-      "¿Qué importancia le das a la comunicación sexual fuera del dormitorio?",
-      "¿Crees que la vergüenza o la culpa pueden influir en nuestra experiencia sexual?",
-      "¿Qué opinas sobre la idea de mantener la chispa sexual a lo largo del tiempo?",
-      "¿Cómo influyen los valores culturales y religiosos en nuestras actitudes sexuales?",
-      "¿Crees que el deseo sexual puede cambiar con la edad?",
-      "¿Qué piensas sobre la importancia de la autoexploración sexual y el autoconocimiento?",
-      "¿Consideras que el sexo es una forma de expresión emocional?",
-      "¿Qué rol crees que juegan las fantasías en la vida sexual de una persona?",
-      "¿Cómo afecta el estrés y las preocupaciones cotidianas a nuestra vida sexual?",
-      "¿Crees que las expectativas sobre el cuerpo perfecto influyen en nuestras experiencias sexuales?",
-      "¿Qué opinas sobre la idea de separar el sexo del amor en ciertos contextos?",
-      "¿Consideras que la confianza en uno mismo es clave para una vida sexual satisfactoria?",
-      "¿Cómo crees que influyen las redes sociales en nuestras percepciones de la sexualidad?",
-      "¿Qué piensas sobre la comunicación sobre las preferencias y deseos sexuales en una relación?",
-      "¿Crees que las diferencias culturales pueden influir en la manera en que vivimos la sexualidad?",
-      "¿Qué importancia le das a la comunicación sobre la salud sexual y el uso de métodos de protección?",
-      "¿Consideras que la aceptación y la autoestima influyen en la satisfacción sexual?",
-      "¿Cómo crees que evolucionan las expectativas sexuales a lo largo de una relación?",
-      "¿Qué opinas sobre la importancia de la honestidad en las conversaciones sobre el sexo?",
-      "¿Crees que las fantasías sexuales pueden enriquecer una relación?",
-      "¿Cómo afectan las experiencias pasadas nuestras actitudes y deseos sexuales?",
-      "¿Qué piensas sobre la comunicación abierta en situaciones de disfunción sexual?",
-      "¿Consideras que la comunicación sobre los límites y las preferencias sexuales es esencial?",
-      "¿Crees que el consentimiento verbal es necesario en cada encuentro sexual?",
-      "¿Qué opinas sobre la importancia de la educación sexual en la juventud?",
-      "¿Cómo influyen los estereotipos de género en nuestras expectativas sexuales?",
-      "¿Consideras que la sexualidad puede ser una forma de empoderamiento?",
-      "¿Qué piensas sobre la influencia de la pornografía en nuestras percepciones del sexo?",
-      "¿Crees que la comunicación sobre las fantasías sexuales puede fortalecer una relación?",
-      "¿Cómo crees que las actitudes hacia el sexo han cambiado en la sociedad moderna?",
-      "¿Cuál es tu visión ideal para el futuro?",
-      "¿Qué crees que es lo más importante en la vida?",
-      "Si pudieras hablar con tu yo del pasado, ¿qué consejo te darías?",
-      "¿Cuál es el momento más importante que has experimentado hasta ahora?",
-      "Si la vida fuese un libro, ¿cuál sería su título y por qué?",
-      "Si fueras una obra de arte, ¿cómo te describirías?",
-      "¿Qué crees que es más valioso: tiempo o dinero?",
-      "Si tuvieras que escribir una carta a la humanidad, ¿qué les dirías?",
-      "¿Qué es lo más hermoso que has encontrado en un lugar inesperado?",
-      "Si pudieras ser una criatura mitológica, ¿cuál serías y por qué?",
-      "¿Qué cambiarías en el mundo si tuvieras el poder para hacerlo?",
-      "¿Cuál es el desafío más grande que has superado y cómo te cambió?",
-      "Si pudieras vivir en una época histórica, ¿cuál elegirías y por qué?",
-      "¿Cuál es tu definición personal de éxito y felicidad?",
-      "Si pudieras tener una conversación con cualquier personaje histórico, ¿quién sería y qué le preguntarías?",
-      "¿Qué lecciones has aprendido de tus mayores errores?",
-      "Si pudieras aprender instantáneamente una habilidad, ¿cuál sería y por qué?",
-      "¿Cuál es el lugar en el mundo donde te sientes más conectado/a contigo mismo/a?",
-      "Si fueras un color, ¿cuál serías y cómo representaría tu personalidad?",
-      "¿Qué te gustaría que las futuras generaciones recuerden de ti?",
-      "Si pudieras tener una conversación con tu yo del futuro, ¿qué te gustaría preguntarle?",
-      "¿Cuál es tu mayor temor y cómo lo enfrentas?",
-      "Si pudieras visitar cualquier lugar en el universo, ¿a dónde irías y por qué?",
-      "¿Qué opinas que es más importante: la verdad o la felicidad?",
-      "Si pudieras experimentar un día en la vida de otra persona, ¿quién sería y por qué?",
-      "¿Qué te hace sentir más vivo/a y enérgico/a?",
-      "Si pudieras tener una habilidad sobrenatural, ¿cuál sería y cómo la usarías?",
-      "¿Cuál es la canción que mejor representa tu estado emocional actual?",
-      "Si pudieras revivir un solo día de tu vida, ¿cuál elegirías y por qué?",
-      "¿Qué te inspira a superar los desafíos en tu vida?",
-      "Si pudieras experimentar una cultura completamente diferente, ¿cuál elegirías y por qué?",
-      "¿Qué libro o película ha tenido el mayor impacto en tu forma de pensar?",
-      "Si pudieras tener una conversación con un animal, ¿cuál sería y qué le preguntarías?",
-      "¿Qué te gustaría que la gente entendiera mejor sobre ti?",
-      "Si pudieras cambiar una decisión que tomaste en el pasado, ¿cuál sería?",
-      "¿Qué es lo que más valoras en tus amistades cercanas?",
-      "Si pudieras explorar un lugar desconocido en la Tierra, ¿a dónde irías y qué descubrirías?",
-      "¿Cuál es el mejor consejo que alguien te ha dado y cómo lo has aplicado?",
-      "Si pudieras experimentar la vida en otro país, ¿cuál sería y qué te gustaría aprender?",
-      "¿Qué te motiva a levantarte cada mañana y enfrentar el día?",
-      "Si pudieras tener una conversación con una versión futura de ti mismo/a, ¿qué te gustaría saber?",
-      "¿Qué aspecto de la naturaleza te conecta más con el mundo que te rodea?",
-      "Si pudieras resolver un problema mundial, ¿cuál elegirías y cómo lo abordarías?",
-      "¿Qué te hace sentir agradecido/a en tu vida en este momento?",
-      "Si pudieras cambiar una creencia o opinión que tienes, ¿cuál sería y por qué?",
-      "¿Qué te gustaría lograr en los próximos 5 años y cómo planeas hacerlo?",
-      "Si pudieras viajar en el tiempo para presenciar un momento histórico, ¿cuál sería y por qué?",
-      "¿Qué te hace sentir más conectado/a con la humanidad en general?",
-      "Si pudieras experimentar un día en la vida de alguien que admiras, ¿quién sería y por qué?",
-      "¿Qué te gustaría explorar o descubrir en el vasto universo?",
-      "Si pudieras cambiar una cosa en la sociedad actual, ¿cuál sería y cómo lo lograrías?",
-      "¿Qué mensaje o consejo te gustaría transmitir a las generaciones futuras?",
-      "¿Cómo crees que tu vida sería diferente si hubieras tomado una decisión clave de manera distinta?", 
-      "¿Qué crees que es lo más importante que has aprendido hasta ahora en la vida?", 
-      "Si pudieras cambiar una creencia o valor que tienes, ¿cuál sería y por qué?", 
-      "¿Cómo crees que tus amigos te perciben realmente?", 
-      "Si pudieras ver el futuro, ¿qué te gustaría saber?", 
-      "¿Qué harías diferente si supieras que nadie te juzgaría por ello?", 
-      "¿Qué es lo que más valoras en las personas que te rodean?", 
-      "Si pudieras cambiar una cosa sobre la sociedad, ¿qué sería?", 
-      "¿Cómo crees que tus padres te ven en comparación con cómo te ves tú?", 
-      "¿Qué tan diferente sería tu vida si no tuvieras miedo al fracaso?", 
-      "Si pudieras regresar al pasado, ¿qué consejo te darías?", 
-      "¿Qué es lo que más te preocupa sobre el futuro?", 
-      "¿Cómo crees que te afecta lo que piensan los demás?", 
-      "¿Qué crees que la gente nota primero sobre ti?", 
-      "Si pudieras ser famoso por un día, ¿qué harías?", 
-      "¿Qué es lo más importante que has aprendido de una experiencia dolorosa?", 
-      "Si pudieras cambiar una sola cosa en tu vida, ¿qué sería y por qué?", 
-      "¿Cómo te ves a ti mismo en comparación con cómo los demás te ven?", 
-      "¿Qué crees que te motiva más, el amor o el miedo?", 
-      "Si pudieras elegir cualquier talento para tener instantáneamente, ¿cuál sería?", 
-      "¿Cómo crees que cambiaría tu vida si dejaras de preocuparte por el futuro?", 
-      "¿Qué harías si tuvieras el poder de influir en la mente de las personas?", 
-      "¿Qué piensas sobre la idea de que todo en la vida tiene un propósito?", 
-      "¿Cómo cambiaría tu vida si nunca más pudieras mentir?", 
-      "Si pudieras comunicarte con una versión más joven de ti, ¿qué le dirías?", 
-      "¿Qué te hace sentir más vivo?", 
-      "¿Qué crees que los demás podrían aprender de ti?", 
-      "¿Qué significa para ti tener éxito en la vida?", 
-      "Si pudieras ser recordado por una sola cosa, ¿qué sería?", 
-      "¿Cómo crees que sería tu vida si hubieras nacido en otra parte del mundo?", 
-      "¿Qué es lo que más te gusta de quién eres?", 
-      "Si tuvieras la oportunidad de empezar de nuevo, ¿qué harías diferente?", 
-      "¿Cómo crees que los demás te describen cuando no estás presente?", 
-      "¿Qué es lo más importante que has aprendido sobre ti mismo?", 
-      "Si pudieras vivir la vida de alguien más por un día, ¿quién sería y por qué?", 
-      "¿Cómo crees que afectas a las personas a tu alrededor?", 
-      "¿Qué crees que es lo más importante que puedes hacer en la vida?", 
-      "¿Cómo te sentirías si todos conocieran tus secretos más profundos?", 
-      "¿Qué es lo que más valoras en la vida?", 
-      "Si pudieras cambiar una cosa en el mundo, ¿qué sería?", 
-      "¿Qué crees que es lo que te define como persona?", 
-      "¿Cómo te afecta lo que piensan los demás de ti?", 
-      "Si pudieras hacer una pregunta al universo y obtener una respuesta, ¿cuál sería?", 
-      "¿Cómo crees que serás recordado cuando ya no estés?", 
-      "¿Qué crees que te impide alcanzar tu máximo potencial?", 
-      "¿Cómo cambiaría tu vida si supieras que nunca serás juzgado?", 
-      "¿Qué es lo que más te enorgullece de ti mismo?", 
-      "Si pudieras eliminar todos tus recuerdos, ¿lo harías? ¿Por qué?", 
-      "¿Qué harías si tuvieras todo el tiempo del mundo?"
-    ],
-    profundidad: [
-      "¿Qué crees que hay después de la muerte?", 
-      "¿Cuál es el mayor sacrificio que estarías dispuesto a hacer por alguien que amas?", 
-      "¿Qué significa para ti la verdadera felicidad?", 
-      "¿Cómo ha cambiado tu concepto de amor a lo largo de los años?", 
-      "¿Qué impacto quieres dejar en el mundo antes de morir?", 
-      "¿Qué es lo que te motiva a seguir adelante en los momentos difíciles?", 
-      "¿Qué crees que te impide alcanzar tu máximo potencial?", 
-      "Si pudieras vivir la vida de otra persona por un día, ¿quién sería y por qué?", 
-      "¿Qué crees que es lo más importante en una relación?", 
-      "¿Cómo te gustaría que te recordaran cuando ya no estés?", 
-      "¿Qué es lo más importante que has aprendido sobre ti mismo?", 
-      "¿Qué significa para ti ser auténtico?", 
-      "¿Cuál es tu mayor miedo y cómo lo enfrentas?", 
-      "¿Qué es lo que más te arrepientes de no haber hecho en la vida?", 
-      "Si pudieras cambiar una sola cosa en tu pasado, ¿qué sería y por qué?", 
-      "¿Qué es lo que más valoras en una amistad?", 
-      "¿Cómo ha cambiado tu perspectiva sobre la vida con el tiempo?", 
-      "¿Qué es lo más difícil que has tenido que superar?", 
-      "¿Qué significa para ti la libertad?", 
-      "¿Qué harías si supieras que te queda un año de vida?", 
-      "¿Cuál es la lección más valiosa que has aprendido en la vida?", 
-      "¿Qué es lo que te hace sentir más conectado con los demás?", 
-      "¿Cómo defines el éxito en tu vida?", 
-      "¿Qué es lo más importante que has hecho por otra persona?", 
-      "¿Qué crees que es lo más difícil de ser humano?", 
-      "¿Cómo ha influido tu infancia en la persona que eres hoy?", 
-      "¿Qué es lo que más te preocupa sobre el futuro?", 
-      "¿Cuál es tu mayor ambición en la vida?", 
-      "¿Qué es lo que te da esperanza en los momentos oscuros?", 
-      "¿Qué significa para ti tener un propósito en la vida?", 
-      "¿Qué crees que te hace único?", 
-      "¿Cómo ha cambiado tu idea de la felicidad a lo largo de los años?", 
-      "¿Qué es lo que más te inspira en la vida?", 
-      "¿Cuál es la decisión más difícil que has tomado?", 
-      "¿Qué es lo que más valoras en ti mismo?", 
-      "¿Qué crees que es lo más importante que puedes aprender en la vida?", 
-      "¿Qué significa para ti vivir una vida plena?", 
-      "¿Qué es lo más importante que puedes hacer por los demás?", 
-      "¿Cuál es tu mayor fortaleza y cómo la has desarrollado?", 
-      "¿Qué es lo que más te ha sorprendido de la vida?", 
-      "¿Cómo ha cambiado tu perspectiva sobre el amor?", 
-      "¿Qué es lo que más te motiva a ser una mejor persona?", 
-      "¿Cuál es tu mayor pasión y cómo la persigues?", 
-      "¿Qué es lo que más te ha enseñado la vida hasta ahora?", 
-      "¿Cómo te gustaría que fuera tu legado?", 
-      "¿Qué es lo que más te ha transformado como persona?", 
-      "¿Qué significa para ti vivir con integridad?", 
-      "¿Cómo has superado tus mayores desafíos en la vida?",
-      "¿Cómo definirías la intimidad en una relación?",
-      "¿Cuál es tu experiencia más significativa de conexión emocional con otra persona?",
-      "¿Qué papel juegan la confianza y la vulnerabilidad en la intimidad?",
-      "¿Cuál es el mayor obstáculo que enfrentas al abrirte emocionalmente a alguien?",
-      "¿Cómo te sientes al compartir tus miedos e inseguridades con tu pareja?",
-      "¿Cuál es el recuerdo más conmovedor que tienes de un momento íntimo?",
-      "¿Qué piensas sobre la importancia de mantener la individualidad en una relación íntima?",
-      "¿Cómo afecta el pasado emocional a tus relaciones actuales?",
-      "¿Qué consideras que es esencial para construir una conexión profunda?",
-      "¿Cuál es el mayor desafío que has enfrentado al comunicarte abiertamente en una relación?",
-      "¿Cómo encuentras el equilibrio entre mantener secretos y ser completamente transparente?",
-      "¿Cuál es el valor más profundo que buscas en una conexión íntima?",
-      "¿Qué opinas sobre la idea de que la verdadera intimidad lleva tiempo en desarrollarse?",
-      "¿Cómo manejas las diferencias en las necesidades de espacio y cercanía emocional?",
-      "¿Qué te impulsa a revelar tus pensamientos más íntimos a tu pareja?",
-      "¿Cuál ha sido tu experiencia más poderosa de superar obstáculos en una relación?",
-      "¿Qué piensas sobre la idea de que la intimidad se relaciona con la aceptación incondicional?",
-      "¿Cómo crees que la comunicación emocional afecta la calidad de una relación?",
-      "¿Qué importancia le das a las conversaciones sobre el futuro en una relación íntima?",
-      "¿Cuál es el mayor temor que tienes en cuanto a la intimidad?",
-      "¿Cómo influyen las heridas emocionales pasadas en tus relaciones actuales?",
-      "¿Qué papel juega el perdón en la construcción de la intimidad?",
-      "¿Cómo crees que se puede mantener viva la chispa de la intimidad a lo largo del tiempo?",
-      "¿Qué opinas sobre la idea de que la intimidad puede ser compartida con amigos cercanos además de parejas?",
-      "¿Cómo te sientes al expresar tus deseos más profundos a tu pareja?",
-      "¿Cuál es el mayor regalo que puedes dar a alguien en términos de intimidad?",
-      "¿Cómo influyen las expectativas sobre la relación en la construcción de la intimidad?",
-      "¿Qué piensas sobre la idea de que la intimidad implica aceptar tanto las fortalezas como las debilidades?",
-      "¿Cuál ha sido la experiencia más valiosa que has tenido al permitirte ser vulnerable?",
-      "¿Cómo crees que las experiencias compartidas fortalecen la intimidad en una relación?",
-      "¿Qué importancia le das a la conexión espiritual en una relación íntima?",
-      "¿Cómo enfrentas los desafíos de la distancia emocional en una relación?",
-      "¿Qué papel juega la empatía en la construcción de la intimidad?",
-      "¿Cuál ha sido tu mayor logro en términos de conectarte profundamente con alguien?",
-      "¿Cómo crees que las barreras culturales pueden afectar la intimidad en una relación?",
-      "¿Qué opinas sobre la idea de que la intimidad implica comprender los miedos y las esperanzas del otro?",
-      "¿Cómo encuentras el equilibrio entre compartir y proteger tu privacidad emocional?",
-      "¿Cuál ha sido tu experiencia más reveladora al permitirte ser vulnerable?",
-      "¿Qué piensas sobre la importancia de nutrir la conexión emocional en una relación íntima?",
-      "¿Cómo enfrentas las diferencias en la forma en que muestras cariño y afecto?",
-      "¿Qué papel juegan las experiencias compartidas en la construcción de la intimidad?",
-      "¿Cuál es tu perspectiva sobre cómo la intimidad puede cambiar y evolucionar con el tiempo?",
-      "¿Cómo influyen las expectativas familiares en tu capacidad para conectarte profundamente?",
-      "¿Qué opinas sobre la idea de que la intimidad se trata de conocer a alguien en su totalidad?",
-      "¿Cómo enfrentas los momentos de desconexión emocional en una relación íntima?",
-      "¿Qué papel desempeñan los desafíos compartidos en la construcción de una conexión profunda?",
-      "¿Cuál es tu enfoque para superar las barreras emocionales en una relación?",
-      "¿Cómo crees que la intimidad se relaciona con la autenticidad en una relación íntima?",
-      "¿Qué opinas sobre la importancia de la gratitud en la construcción de la intimidad?",
-      "¿Cómo enfrentas los momentos de vulnerabilidad en una relación íntima?",
-      "¿Cuál ha sido el momento más significativo de tu vida?",
-      "¿Qué experiencias te han cambiado como persona?",
-      "¿Cuál es la lección más valiosa que has aprendido de tus fracasos?",
-      "Si pudieras cambiar una decisión importante en tu vida, ¿cuál sería y por qué?",
-      "¿Qué valores son fundamentales para ti y cómo influyen en tus decisiones?",
-      "Si tuvieras que describirte en tres palabras, ¿cuáles usarías y por qué?",
-      "¿Cuál es tu mayor miedo y cómo has tratado de superarlo?",
-      "¿Qué crees que es la clave para una relación exitosa?",
-      "Si pudieras conocer la respuesta a una pregunta sobre tu futuro, ¿cuál preguntarías?",
-      "¿Cómo te enfrentas a los momentos de incertidumbre en tu vida?",
-      "Si tu vida fuera una película, ¿cuál sería su mensaje central?",
-      "¿Cuál es el desafío interno más grande que has superado y cómo lo lograste?",
-      "¿Qué te ha enseñado el dolor y cómo ha impactado en tu crecimiento?",
-      "Si pudieras cambiar una cosa sobre ti mismo/a, ¿qué sería y por qué?",
-      "¿Cómo defines la autenticidad y cómo la vives en tu vida cotidiana?",
-      "¿Qué opinas sobre el propósito de la existencia humana?",
-      "Si tuvieras la oportunidad de influir en el mundo, ¿qué legado te gustaría dejar?",
-      "¿Cuál es la relación más influyente que has tenido y cómo te ha afectado?",
-      "¿Qué rol juega la empatía en tus relaciones personales?",
-      "Si pudieras tener una conversación honesta contigo mismo/a, ¿qué te dirías?",
-      "¿Cuál es la lección más importante que has aprendido de alguien menor que tú?",
-      "¿Cómo manejas las contradicciones internas y las luchas emocionales?",
-      "Si pudieras hablar con alguien que ya no está contigo, ¿qué les dirías?",
-      "¿Cuál es tu filosofía personal sobre cómo vivir una vida plena?",
-      "¿Qué te gustaría que las personas comprendieran mejor sobre tu mundo interior?",
-      "Si tuvieras la oportunidad de cambiar una creencia global, ¿cuál sería y por qué?",
-      "¿Qué te inspira a superar los obstáculos y perseverar en momentos difíciles?",
-      "Si pudieras dar un consejo a tu yo más joven, ¿qué le dirías?",
-      "¿Cómo encuentras el equilibrio entre la gratitud por el presente y la aspiración al futuro?",
-      "¿Qué es lo que más te ha sorprendido en tu viaje de autodescubrimiento?",
-      "Si tuvieras que definir el amor en una sola frase, ¿cómo lo describirías?",
-      "¿Qué te motiva a seguir aprendiendo y creciendo a lo largo de tu vida?",
-      "Si pudieras resolver un problema global, ¿cuál elegirías y cómo lo abordarías?",
-      "¿Cuál es la mayor lección que has aprendido de una pérdida o separación?",
-      "¿Cómo te conectas con tu intuición y confías en tus decisiones?",
-      "Si pudieras enseñar una sola lección a la humanidad, ¿cuál sería?",
-      "¿Cómo encuentras significado y propósito en los momentos difíciles?",
-      "¿Qué papel juega la autenticidad en tus relaciones personales?",
-      "Si pudieras experimentar la vida desde la perspectiva de otra persona, ¿quién sería?",
-      "¿Cómo te enfrentas a tus propios prejuicios y sesgos?",
-      "Si pudieras cambiar una política mundial, ¿cuál sería y cómo afectaría al mundo?",
-      "¿Cómo defines la felicidad y qué haces para cultivarla en tu vida?",
-      "Si tuvieras que describir tu evolución personal en una palabra, ¿cuál sería?",
-      "¿Qué te gustaría explorar más profundamente en tu búsqueda de entendimiento?",
-      "Si pudieras hacer una pregunta al universo y obtener una respuesta, ¿qué preguntarías?",
-      "¿Cuál es la mayor lección que has aprendido al enfrentarte a tus miedos?",
-      "¿Cómo influye tu pasado en tus elecciones y acciones actuales?",
-      "Si pudieras resumir tu filosofía de vida en una frase, ¿cuál sería?",
-      "¿Cómo te conectas con tu espiritualidad o sentido de trascendencia?",
-      "Si pudieras hablar con alguien famoso, ¿qué conversación te gustaría tener?",
-      "¿Cómo te imaginas tu vida en un estado de plenitud absoluta?",
-      "Si tuvieras que compartir una sabiduría con las generaciones futuras, ¿cuál sería?"
-    ],
-    picantes: ["¿Cuál es la fantasía más oscura que has tenido y nunca has compartido?", 
-      "¿Qué es lo más loco que has hecho por pura lujuria?", 
-      "¿Si pudieras tener una aventura sin que nadie lo supiera, lo harías?", 
-      "¿Cuál es el lugar más público donde has tenido relaciones?", 
-      "¿Qué es lo más atrevido que te gustaría probar en la cama?", 
-      "¿Cuál es la cosa más salvaje que has hecho en una noche de fiesta?", 
-      "¿Alguna vez has sido infiel o lo has considerado seriamente?", 
-      "¿Qué es lo más vergonzoso que has buscado en internet?", 
-      "¿Te atrae alguien que no deberías, como el novio o novia de un amigo?", 
-      "¿Cuál es tu recuerdo más picante de una aventura de una noche?", 
-      "¿Qué parte de tu cuerpo te da más placer cuando es tocada?", 
-      "¿Qué es lo más inapropiado que te excita?", 
-      "¿Alguna vez has tenido pensamientos inapropiados sobre un colega?", 
-      "¿Si pudieras pasar una noche con cualquier persona famosa, quién sería?", 
-      "¿Te gustaría que te grabaran en un momento íntimo?", 
-      "¿Qué es lo más atrevido que has hecho estando borracho?", 
-      "¿Has usado alguna vez juguetes sexuales en tus encuentros?", 
-      "¿Qué es lo más arriesgado que has hecho para satisfacer un deseo?", 
-      "¿Alguna vez has tenido un sueño erótico con alguien inesperado?", 
-      "¿Te gustaría cumplir alguna fantasía de dominación o sumisión?", 
-      "¿Cuál es el lugar más inusual donde te has excitado?", 
-      "¿Qué es lo más extremo que has hecho por placer?", 
-      "¿Te has sentido atraído por alguien que está fuera de los límites?", 
-      "¿Te gustaría experimentar algo más intenso o peligroso en el sexo?", 
-      "¿Has tenido alguna fantasía sobre un amigo cercano?", 
-      "¿Qué es lo más atrevido que has hecho mientras alguien podría haberte visto?", 
-      "¿Qué es lo más cercano que has estado a ser atrapado en un momento íntimo?", 
-      "¿Alguna vez has tenido una relación solo por el sexo?", 
-      "¿Te excita la idea de ser sorprendido en un momento comprometedor?", 
-      "¿Qué es lo más atrevido que has dicho en un mensaje de texto?", 
-      "¿Te gustaría explorar el intercambio de parejas o algo similar?", 
-      "¿Cuál es tu secreto más oscuro relacionado con el placer?", 
-      "¿Has tenido alguna vez un deseo prohibido por alguien que no deberías?", 
-      "¿Te atreverías a cumplir una fantasía en un lugar extremadamente público?", 
-      "¿Qué es lo más atrevido que has hecho sin que nadie lo supiera?", 
-      "¿Alguna vez has usado tu posición de poder para seducir a alguien?", 
-      "¿Te gustaría probar algo que consideras tabú?", 
-      "¿Has sentido alguna vez un deseo irresistible por alguien comprometido?", 
-      "¿Cuál es la cosa más erótica que has visto en una película?", 
-      "¿Qué es lo más atrevido que has hecho durante una videollamada?", 
-      "¿Alguna vez has sentido una atracción física por alguien mucho mayor o menor?", 
-      "¿Qué es lo más salvaje que has soñado hacer pero nunca te has atrevido?", 
-      "¿Alguna vez has hecho algo arriesgado solo por la emoción del peligro?", 
-      "¿Qué es lo más atrevido que te gustaría experimentar con otra persona?", 
-      "¿Te has sentido atraído alguna vez por alguien que no encaja con tus gustos habituales?", 
-      "¿Qué es lo más atrevido que harías si supieras que nadie se enteraría?", 
-      "¿Alguna vez has compartido un secreto íntimo solo para seducir a alguien?", 
-      "¿Qué es lo más salvaje que has hecho en una fiesta privada?",
-      "Si tuvieras que crear una película erótica con tu vida, ¿cuál sería el argumento?",
-      "¿Qué opinas sobre la idea de tener una noche de juegos de roles con tu pareja?",
-      "Si pudieras experimentar una fantasía sensual en un lugar público, ¿dónde sería?",
-      "¿Has probado alguna vez una experiencia sensual bajo la luz de la luna?",
-      "Si tuvieras la oportunidad de explorar una fantasía prohibida, ¿cuál sería?",
-      "¿Qué importancia le das al poder de la seducción en las relaciones?",
-      "Si pudieras vivir una aventura ardiente en una época histórica, ¿cuál elegirías?",
-      "¿Has experimentado con la idea de compartir tus pensamientos eróticos con tu pareja?",
-      "Si pudieras crear tu propia guía de seducción, ¿qué consejos incluirías?",
-      "¿Qué piensas sobre la posibilidad de tener una noche apasionada en un lugar exótico?",
-      "Si pudieras tener una experiencia sensual en un escenario inusual, ¿cuál sería?",
-      "¿Has explorado la idea de un fin de semana de pasión en un retiro romántico?",
-      "Si pudieras protagonizar una escena ardiente de una película famosa, ¿cuál sería?",
-      "¿Qué opinas sobre la posibilidad de sorprender a tu pareja con una fantasía secreta?",
-      "Si pudieras revivir una experiencia erótica del pasado, ¿cuál elegirías?",
-      "¿Has probado alguna vez la idea de una noche de pasión con elementos de misterio?",
-      "Si pudieras explorar tus deseos más salvajes en un lugar remoto, ¿dónde sería?",
-      "¿Qué importancia le das a la sensualidad en la construcción de una conexión emocional?",
-      "Si pudieras protagonizar una sesión de fotos sensual, ¿en qué entorno sería?",
-      "¿Has considerado la posibilidad de un encuentro erótico al estilo de una cita a ciegas?",
-      "¿Cuál es tu fantasía más atrevida?",
-      "Si pudieras tener una noche de pasión con una celebridad, ¿quién sería?",
-      "¿Qué lugar inusual te gustaría probar para tener relaciones?",
-      "¿Cuál es la situación más emocionante en la que has tenido relaciones?",
-      "¿Tienes algún fetiche que te gustaría explorar?",
-      "Si pudieras probar cualquier juguete sexual, ¿cuál elegirías?",
-      "¿Qué opinas sobre el sexting y su papel en las relaciones modernas?",
-      "¿Has tenido alguna experiencia en un lugar público o arriesgado?",
-      "¿Qué te parece la idea de tener una noche temática con juegos sexuales?",
-      "¿Cómo te sientes acerca de los juguetes y accesorios en la intimidad?",
-      "¿Alguna vez has tenido un sueño erótico que te haya dejado impactado?",
-      "Si pudieras cambiar de género por un día, ¿cómo explorarías tu sexualidad?",
-      "¿Qué opinas sobre la posibilidad de tener encuentros casuales sin compromiso?",
-      "¿Has experimentado con la seducción o el coqueteo en lugares inesperados?",
-      "Si pudieras diseñar tu escenario perfecto para una noche apasionada, ¿cómo sería?",
-      "¿Qué piensas sobre la idea de introducir alimentos en la intimidad?",
-      "¿Cuál es tu opinión sobre el intercambio de roles en la pareja?",
-      "Si pudieras recrear una escena de una película o libro en la vida real, ¿cuál sería?",
-      "¿Qué crees que es lo más importante para mantener una chispa en la relación?",
-      "¿Has probado alguna vez una experiencia de realidad virtual con contenido erótico?",
-      "Si pudieras cambiar un aspecto de tu vida sexual, ¿qué elegirías?",
-      "¿Qué opinas sobre el uso de disfraces en la intimidad?",
-      "¿Alguna vez has considerado la posibilidad de tener relaciones en público?",
-      "Si pudieras experimentar una noche de pasión en una época histórica, ¿cuál sería?",
-      "¿Qué crees que es esencial para comunicar tus deseos y límites en la intimidad?",
-      "¿Has explorado el mundo de los juegos de rol en la intimidad?",
-      "Si pudieras cambiar un aspecto de las expectativas sexuales en la sociedad, ¿cuál sería?",
-      "¿Qué opinas sobre la incorporación de juegos de mesa o cartas eróticas en la relación?",
-      "¿Has explorado el concepto de 'amigos con beneficios' o relaciones sin compromiso?",
-      "Si pudieras diseñar tu habitación de fantasía para una noche apasionada, ¿cómo sería?",
-      "¿Qué importancia le das a la exploración de nuevas posiciones sexuales?",
-      "¿Has tenido alguna experiencia en la que el factor sorpresa haya avivado la pasión?",
-      "Si pudieras viajar en el tiempo y tener una noche íntima con alguien, ¿quién sería?",
-      "¿Qué piensas sobre la posibilidad de combinar aventuras al aire libre con la intimidad?",
-      "¿Has experimentado con la idea de un encuentro espontáneo en lugares públicos?",
-      "Si pudieras cambiar un aspecto de las normas sexuales en la sociedad, ¿cuál sería?",
-      "¿Qué opinas sobre la incorporación de elementos de BDSM en la intimidad?",
-      "¿Has probado alguna vez una experiencia sensual en un lugar inusual?",
-      "Si pudieras explorar cualquier lugar del mundo de manera íntima, ¿dónde sería?",
-      "¿Qué importancia le das a la comunicación abierta sobre deseos sexuales?",
-      "¿Has tenido alguna experiencia que te haya sorprendido por su intensidad?",
-      "Si pudieras compartir una experiencia sensual con tu pareja ideal, ¿cómo sería?",
-      "¿Qué te parece la idea de una escapada romántica con un toque picante?",
-      "Si pudieras disfrutar de una noche apasionada en un destino exótico, ¿dónde sería?",
-      "¿Has experimentado con la creación de un ambiente sensual a través de aromas?",
-      "Si pudieras tener una cita temática con un enfoque sensual, ¿cómo sería?",
-      "¿Qué opinas sobre el uso de la lencería y disfraces en la relación?",
-      "Si pudieras revivir una experiencia pasional del pasado, ¿cuál sería?",
-      "¿Has explorado la posibilidad de introducir elementos de juego en la intimidad?",
-      "Si pudieras tener una noche apasionada en un lugar histórico, ¿dónde sería?"
-    ],
-    random: [
-      "¿Qué sabor de helado describiría mejor tu personalidad?", 
-      "Si fueras un animal, ¿cuál serías y por qué?", 
-      "¿Qué superpoder ridículo te gustaría tener?", 
-      "¿Qué harías si te despertaras siendo el género opuesto?", 
-      "Si solo pudieras comer una cosa por el resto de tu vida, ¿qué sería?", 
-      "¿Qué harías si te encontraras con un extraterrestre?", 
-      "Si tuvieras que vivir en un videojuego, ¿cuál elegirías?", 
-      "¿Qué harías si ganaras la lotería, pero solo pudieras gastar el dinero en cosas raras?", 
-      "¿Qué harías si pudieras hablar con los animales?", 
-      "Si pudieras tener un dinosaurio como mascota, ¿cuál elegirías?", 
-      "¿Qué harías si te quedaras atrapado en un ascensor por 24 horas?", 
-      "Si pudieras intercambiar vidas con una celebridad por un día, ¿quién sería?", 
-      "¿Qué harías si pudieras ser invisible por un día?", 
-      "¿Cuál es la cosa más extraña que te ha pasado en público?", 
-      "¿Si fueras un fantasma, a quién asustarías primero?", 
-      "Si pudieras ser cualquier personaje de una película, ¿quién serías?", 
-      "¿Qué harías si un día descubrieras que tienes un gemelo malvado?", 
-      "¿Qué harías si pudieras retroceder el tiempo 10 minutos?", 
-      "Si fueras un vegetal, ¿cuál serías y por qué?", 
-      "¿Qué harías si un día te convirtieras en tu personaje de dibujos animados favorito?", 
-      "Si solo pudieras hablar en rimas, ¿cómo sonarías?", 
-      "¿Cuál es la cosa más extraña que has comido y disfrutado?", 
-      "¿Qué harías si te despertaras en el cuerpo de otra persona?", 
-      "Si tuvieras que elegir un tema para tatuarte en la frente, ¿cuál sería?", 
-      "¿Qué harías si pudieras cambiar tu nombre a cualquier cosa?", 
-      "Si pudieras ser un superhéroe, pero solo podrías tener un poder inútil, ¿cuál sería?", 
-      "¿Qué harías si tuvieras que elegir entre volar o respirar bajo el agua?", 
-      "Si pudieras ser un maestro en cualquier actividad inútil, ¿cuál elegirías?", 
-      "¿Qué harías si pudieras vivir dentro de una película animada?", 
-      "Si solo pudieras escuchar una canción por el resto de tu vida, ¿cuál sería?", 
-      "¿Qué harías si pudieras convertir cualquier objeto en oro?", 
-      "Si pudieras tener un trabajo ridículo pero extremadamente bien pagado, ¿qué sería?", 
-      "¿Qué harías si tuvieras que vivir en una isla desierta con solo un objeto?", 
-      "Si pudieras vivir en cualquier época pasada, ¿cuál elegirías?", 
-      "¿Qué harías si te encontraras con tu yo del futuro por 10 minutos?", 
-      "Si tuvieras que elegir un nombre completamente nuevo, ¿cuál sería?", 
-      "¿Qué harías si tuvieras que comunicarte solo a través de memes?", 
-      "Si pudieras convertirte en un animal una vez al mes, ¿cuál sería?", 
-      "¿Qué harías si pudieras borrar un evento de la historia?", 
-      "Si pudieras tener un botón que te llevara a cualquier lugar del mundo, ¿dónde irías?", 
-      "¿Qué harías si pudieras entender y hablar todos los idiomas del mundo?", 
-      "Si fueras un objeto inanimado, ¿qué serías?", 
-      "¿Qué harías si solo pudieras vestirte de un color para siempre?", 
-      "Si pudieras tener un clon de ti mismo, ¿qué tarea le asignarías?", 
-      "¿Qué harías si tuvieras que elegir entre ser siempre honesto o nunca poder mentir?", 
-      "Si pudieras vivir en un libro, ¿en cuál sería?", 
-      "¿Qué harías si pudieras hacer que todos olvidaran algo sobre ti?", 
-      "Si pudieras ser un villano famoso por un día, ¿quién serías?", 
-      "¿Qué harías si pudieras cambiar el final de cualquier película?", 
-      "Si pudieras tener cualquier tipo de acento, ¿cuál elegirías?", 
-      "¿Qué harías si pudieras eliminar un día de la semana?", 
-      "Si fueras un personaje de videojuego, ¿cuál sería tu habilidad especial?", 
-      "¿Qué harías si pudieras elegir cualquier profesión, pero solo por un día?", 
-      "Si pudieras tener un canal de YouTube exitoso sobre cualquier tema, ¿cuál sería?", 
-      "¿Qué harías si te convirtieras en el presidente de tu país por un día?", 
-      "Si pudieras crear una ley ridícula que todos debieran seguir, ¿cuál sería?", 
-      "¿Qué harías si un día descubrieras que puedes volar?", 
-      "Si pudieras ser cualquier superhéroe, pero con un traje ridículo, ¿quién serías?", 
-      "¿Qué harías si pudieras cambiar tu voz a la de cualquier persona famosa?", 
-      "Si solo pudieras comer un tipo de comida por el resto de tu vida, ¿cuál sería?", 
-      "¿Qué harías si te despertaras y todo estuviera al revés?", 
-      "Si fueras una estación del año, ¿cuál serías?", 
-      "¿Qué harías si pudieras visitar cualquier lugar en el universo?", 
-      "Si pudieras ser un maestro de cualquier habilidad, pero nunca pudieras usarla, ¿cuál sería?", 
-      "¿Qué harías si un día descubrieras que puedes leer mentes?", 
-      "Si pudieras cambiar el clima a tu antojo, ¿qué elegirías?", 
-      "¿Qué harías si te convirtieras en un meme viral?", 
-      "Si solo pudieras tener una conversación por día, ¿con quién sería?", 
-      "¿Qué harías si te encontraras con un doble exacto de ti mismo?", 
-      "Si pudieras vivir en cualquier planeta del sistema solar, ¿cuál elegirías?", 
-      "¿Qué harías si pudieras hacer que cualquier objeto cobre vida?", 
-      "Si pudieras ser un experto en cualquier tema absurdo, ¿cuál sería?", 
-      "¿Qué harías si solo pudieras usar una red social por el resto de tu vida?", 
-      "Si fueras una bebida, ¿cuál serías y por qué?", 
-      "¿Qué harías si pudieras cambiar el color del cielo a cualquier color?", 
-      "Si pudieras tener cualquier trabajo sin ninguna habilidad previa, ¿cuál elegirías?", 
-      "¿Qué harías si descubrieras que puedes controlar el tiempo?", 
-      "Si pudieras transformar tu vida en un reality show, ¿cómo sería?", 
-      "¿Qué harías si pudieras hacer que cualquier animal sea del tamaño de un perro?", 
-      "Si pudieras vivir en cualquier parte del mundo sin preocuparte por el dinero, ¿dónde sería?", 
-      "¿Qué harías si pudieras volver a vivir un solo día de tu vida?", 
-      "Si pudieras cambiar tu estatura a voluntad, ¿cómo la usarías?", 
-      "¿Qué harías si pudieras ver el futuro, pero solo un día por adelantado?", 
-      "Si pudieras eliminar una cosa molesta de la vida diaria, ¿qué sería?", 
-      "¿Qué harías si pudieras entender a las plantas?", 
-      "Si pudieras tener una mascota legendaria de la mitología, ¿cuál sería?", 
-      "¿Qué harías si pudieras cambiar el nombre de cualquier cosa en el mundo?", 
-      "Si solo pudieras usar una palabra para describir todo, ¿cuál sería?", 
-      "¿Qué harías si te convirtieras en el personaje principal de tu serie favorita?", 
-      "Si pudieras cambiar cualquier parte de tu cuerpo al de un animal, ¿cuál sería?", 
-      "¿Qué harías si te dieran la capacidad de caminar a través de las paredes?", 
-      "Si pudieras vivir dentro de una pintura famosa, ¿cuál sería?", 
-      "¿Qué harías si te convirtieras en un emoji?", 
-      "Si pudieras ser cualquier objeto en una película, ¿qué serías?", 
-      "¿Qué harías si pudieras cambiar cualquier ley física por un día?",
-      "¿Cómo fue la primera vez que viste contenido para adultos? ¿En qué contexto fue?",
-      "¿Alguna vez has tenido una conexión inesperada con una persona que acabas de conocer?",
-      "Si pudieras tener una cita con alguien famoso, ¿quién sería y qué harían?",
-      "¿Qué harías si te encontraras en una isla desierta con solo una persona por un mes?",
-      "¿Tienes algún secreto extravagante o divertido que estés dispuesto a compartir?",
-      "¿Cuál es la cosa más extraña que has hecho por amor?",
-      "Si pudieras intercambiar de vida con alguien por un día, ¿quién sería y qué harías?",
-      "¿Alguna vez has tenido un encuentro inesperado que cambió tu día por completo?",
-      "Si fueras un superhéroe, ¿cuál sería tu súper poder y cómo lo usarías?",
-      "¿Tienes una historia divertida o embarazosa que nunca olvidarás?",
-      "Si pudieras vivir en cualquier época histórica, ¿cuál elegirías y por qué?",
-      "¿Alguna vez has experimentado un flechazo a primera vista? Cuéntanos.",
-      "Si pudieras crear una nueva tradición, ¿cuál sería y cómo la celebrarías?",
-      "¿Tienes alguna habilidad o talento oculto que pocos conocen?",
-      "Si pudieras tener una conversación con cualquier personaje histórico, ¿quién sería?",
-      "¿Has tenido alguna experiencia que te haya hecho creer en el destino?",
-      "Si pudieras viajar a cualquier lugar del mundo en este momento, ¿dónde irías?",
-      "¿Tienes alguna meta o sueño que nunca has compartido con nadie?",
-      "Si fueras el protagonista de una película, ¿cuál sería el género y el argumento?",
-      "¿Alguna vez has tenido una intuición fuerte que resultó ser cierta?",
-      "Si pudieras cambiar una decisión en tu pasado, ¿cuál sería y por qué?",
-      "¿Tienes una historia de amistad que te haga sonreír cada vez que la recuerdas?",
-      "Si fueras un animal, ¿cuál sería y cómo pasarías un día típico?",
-      "¿Alguna vez has tomado una decisión impulsiva que cambió tu vida?",
-      "Si pudieras presenciar un evento histórico, ¿cuál sería y por qué?",
-      "¿Tienes alguna tradición familiar única o especial que te gustaría compartir?",
-      "Si pudieras vivir en cualquier universo ficticio, ¿cuál sería tu elección?",
-      "¿Alguna vez has tenido una conversación profunda con un extraño que nunca olvidarás?",
-      "Si pudieras aprender instantáneamente cualquier habilidad, ¿cuál sería y cómo la usarías?",
-      "¿Tienes alguna historia de viaje emocionante o inusual que te gustaría contar?",
-      "Si fueras un personaje de libro o película, ¿cuál sería tu papel en la historia?",
-      "¿Alguna vez has tenido un sueño extraño que te hizo reflexionar?",
-      "Si pudieras tener una cena con cualquier personaje histórico, ¿qué preguntas les harías?",
-      "¿Tienes algún hábito o manía interesante que quieras compartir?",
-      "Si pudieras ser parte de cualquier evento deportivo o artístico, ¿cuál sería?",
-      "¿Alguna vez has tenido un encuentro con un animal salvaje o exótico?",
-      "Si pudieras inventar un nuevo juego, ¿cuál sería la premisa y las reglas?",
-      "¿Tienes alguna historia de coincidencia asombrosa que te haya dejado sin palabras?",
-      "Si pudieras ser testigo de un descubrimiento científico, ¿cuál elegirías?",
-      "¿Alguna vez has tenido un momento en el que te sentiste completamente fuera de tu zona de confort?",
-      "Si pudieras viajar en el tiempo y darle un consejo a tu yo más joven, ¿qué le dirías?",
-      "¿Tienes alguna experiencia de aprendizaje inusual o inspiradora que quieras compartir?",
-      "Si pudieras pasar un día con un personaje de ficción, ¿quién sería y qué harían?",
-      "¿Alguna vez has tenido una experiencia mágica que no puedes explicar?",
-      "Si pudieras explorar un lugar misterioso o legendario, ¿dónde irías?",
-      "¿Tienes una historia de amistad que demuestre la importancia de la confianza?",
-      "Si pudieras asistir a un evento histórico, ¿qué momento te gustaría presenciar?",
-      "¿Alguna vez has experimentado una conexión instantánea con alguien que acabas de conocer?",
-      "Si pudieras crear una nueva festividad, ¿cuál sería su propósito y cómo se celebraría?",
-      "¿Tienes alguna historia que demuestre la importancia de seguir tus instintos?"
-    ],
-  };
+buttonRandomCategory.addEventListener("click", () => {
+    let randomCat = elegirAleatorio(categ);
+    SelectedCard(randomCat);
+});
 
+console.log(questions);
 
-
-
+// función para elegir un elemento al azar de un array (básicamente un "metele que es tarde")
 function elegirAleatorio(arreglo) {
-  const randomIndex = Math.floor(Math.random() * arreglo.length);
-  return(arreglo[randomIndex]);
+    const randomIndex = Math.floor(Math.random() * arreglo.length);
+    return arreglo[randomIndex];
 }
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  function capitalizeFirstLetter(str) {
-    if (str.length === 0) return str; // Maneja el caso de cadena vacía
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-function SelectedCard(cardName){
 
-    menuGameContainer.classList.add("showMenu")
-    let randomQuestion = getRandomInt(0, questions[cardName].length - 1)
-    nameViewSelected.innerText = capitalizeFirstLetter(cardName)
-    imgCard.src = './assets/img/' + cardName + '.svg'
-    cardFront.classList = ["viewCard"]
-    cardFront.classList.add("back" + cardName)
-    nameViewSelected.classList.add("degrade" + cardName)
-    
-    viewCardContainer.classList.add("showViewCard")
-    cardText.innerText = questions[cardName][randomQuestion]
-    console.log(cardName)
-    backButton.addEventListener("click", ()=>{
-        viewCardContainer.classList.remove("showViewCard")
-        menuGameContainer.classList.remove("showMenu")
+// función para poner en mayúscula la primera letra, porque somos detallistas 😎
+function capitalizeFirstLetter(str) {
+    return str.length === 0 ? str : str.charAt(0).toUpperCase() + str.slice(1);
+}
 
-    })
-    buttonViewCar.addEventListener("click",()=>{
-        card.classList.add('flipped')
-        cardFront.classList.add('flippedFront')
-        cardBack.classList.add('flippedBack')
-        nameCardSelected.style.opacity = '0'
-        buttonViewCardContainer.style.opacity = '0'
-        //viewCardContainer.classList.add('back' + cardName)
-        backButton.addEventListener("click", ()=>{
+// función que se fija qué preguntas ya salieron y elige una que no esté repetida
+function obtenerPreguntaAleatoria(cardName) {
+    // filtramos las preguntas que todavía no salieron
+    let preguntasDisponibles = questions[cardName].filter(p => !preguntasUsadas[cardName].includes(p));
 
+    // si ya salieron todas, reseteamos la lista y que vuelva la joda
+    if (preguntasDisponibles.length === 0) {
+        preguntasUsadas[cardName] = [];
+        preguntasDisponibles = [...questions[cardName]]; // clonamos el array original para no romper nada
+    }
 
+    // elegimos una pregunta al azar entre las que quedan
+    let preguntaSeleccionada = elegirAleatorio(preguntasDisponibles);
+
+    // guardamos la pregunta en la lista de usadas para que no se repita
+    preguntasUsadas[cardName].push(preguntaSeleccionada);
+
+    return preguntaSeleccionada;
+}
+
+// función principal que maneja la selección de una categoría
+function SelectedCard(cardName) {
+    menuGameContainer.classList.add("showMenu");
+
+    // sacamos una pregunta random pero sin repetir (como corresponde)
+    let pregunta = obtenerPreguntaAleatoria(cardName);
+
+    nameViewSelected.innerText = capitalizeFirstLetter(cardName);
+    imgCard.src = './assets/img/' + cardName + '.svg';
+    cardFront.classList = ["viewCard"];
+    cardFront.classList.add("back" + cardName);
+    nameViewSelected.classList.add("degrade" + cardName);
+
+    viewCardContainer.classList.add("showViewCard");
+    cardText.innerText = pregunta;
+    console.log(cardName);
+
+    // evento para cerrar la vista de la pregunta
+    backButton.addEventListener("click", () => {
+        viewCardContainer.classList.remove("showViewCard");
+        menuGameContainer.classList.remove("showMenu");
+    });
+
+    // evento para cuando se da vuelta la carta
+    buttonViewCar.addEventListener("click", () => {
+        card.classList.add('flipped');
+        cardFront.classList.add('flippedFront');
+        cardBack.classList.add('flippedBack');
+        nameCardSelected.style.opacity = '0';
+        buttonViewCardContainer.style.opacity = '0';
+
+        backButton.addEventListener("click", () => {
             setTimeout(() => {
-              card.classList.remove('flipped')
-              cardFront.classList.remove('flippedFront')
-              cardBack.classList.remove('flippedBack')
-              nameCardSelected.style.opacity = '1'
-              buttonViewCardContainer.style.opacity = '1'
+                card.classList.remove('flipped');
+                cardFront.classList.remove('flippedFront');
+                cardBack.classList.remove('flippedBack');
+                nameCardSelected.style.opacity = '1';
+                buttonViewCardContainer.style.opacity = '1';
             }, 250);
             setTimeout(() => {
-              nameViewSelected.classList = []
-              cardFront.classList = ["viewCard"]
-
-
-            }, 500);  
-
-
-        })
-    })
+                nameViewSelected.classList = [];
+                cardFront.classList = ["viewCard"];
+            }, 500);
+        });
+    });
 }
