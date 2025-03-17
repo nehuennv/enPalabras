@@ -22,7 +22,7 @@ modalWelcome.classList.add("modalWelcome");
 modalWelcome.innerHTML = `
   <div class="modalContent">
     <h2>¡bienvenidos</h2>
-    <p>elegí una categoría y respondé, son preuguntas generadas por ia por si suelta alguna burrada, aviso</p>
+    <p>elegí una categoría y respondé, son preguntas generadas por ia por si suelta alguna burrada, aviso</p>
     <p>hecho por <a href="https://www.instagram.com/nehuennv" target="_blank">@nehuennv</a></p>
     <button id="closeModal">ok gracias 👍🏻</button>
   </div>
